@@ -37,8 +37,8 @@ namespace Implementation
         {           
             m_logger = logger;
 
-            LibVlcMethods.libvlc_set_log_verbosity(hLib, 2);
-            m_hLog = LibVlcMethods.libvlc_log_open(hLib);
+            NativeMethods.libvlc_set_log_verbosity(hLib, 2);
+            m_hLog = NativeMethods.libvlc_log_open(hLib);
             m_logIterator = new LogIterator(m_hLog);
             m_reader = new Thread(Retreive);
             m_reader.IsBackground = true;
@@ -119,7 +119,7 @@ namespace Implementation
 
         protected override void Dispose(bool disposing)
         {
-            LibVlcMethods.libvlc_log_close(m_hLog);
+            NativeMethods.libvlc_log_close(m_hLog);
         }
 
         private class LogIterator : IEnumerable<LogMessage>
@@ -135,19 +135,19 @@ namespace Implementation
 
             public IEnumerator<LogMessage> GetEnumerator()
             {
-                IntPtr i = LibVlcMethods.libvlc_log_get_iterator(m_hLog);
+                IntPtr i = NativeMethods.libvlc_log_get_iterator(m_hLog);
 
-                while (LibVlcMethods.libvlc_log_iterator_has_next(i))
+                while (NativeMethods.libvlc_log_iterator_has_next(i))
                 {
                     libvlc_log_message_t msg = new libvlc_log_message_t();
                     msg.sizeof_msg = (uint)Marshal.SizeOf(msg);
-                    LibVlcMethods.libvlc_log_iterator_next(i, ref msg);
+                    NativeMethods.libvlc_log_iterator_next(i, ref msg);
 
                     yield return GetMessage(msg);
                 }
 
-                LibVlcMethods.libvlc_log_iterator_free(i);
-                //LibVlcMethods.libvlc_log_clear(m_hLog);
+                NativeMethods.libvlc_log_iterator_free(i);
+                //NativeMethods.libvlc_log_clear(m_hLog);
             }
 
             private LogMessage GetMessage(libvlc_log_message_t msg)

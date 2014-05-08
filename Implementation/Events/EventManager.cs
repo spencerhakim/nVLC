@@ -41,7 +41,7 @@ namespace Implementation.Events
 
         protected void Attach(libvlc_event_e eType)
         {
-            if (LibVlcMethods.libvlc_event_attach(m_eventProvider.EventManagerHandle, eType, hCallback1, IntPtr.Zero) != 0)
+            if (NativeMethods.libvlc_event_attach(m_eventProvider.EventManagerHandle, eType, hCallback1, IntPtr.Zero) != 0)
             {
                 throw new OutOfMemoryException("Failed to subscribe to event notification");
             }
@@ -49,7 +49,7 @@ namespace Implementation.Events
 
         protected void Dettach(libvlc_event_e eType)
         {
-            LibVlcMethods.libvlc_event_detach(m_eventProvider.EventManagerHandle, eType, hCallback1, IntPtr.Zero);
+            NativeMethods.libvlc_event_detach(m_eventProvider.EventManagerHandle, eType, hCallback1, IntPtr.Zero);
         }
 
         protected abstract void MediaPlayerEventOccured(ref libvlc_event_t libvlc_event, IntPtr userData);

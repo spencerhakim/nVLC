@@ -45,11 +45,11 @@ namespace Implementation.Filters
               m_enabled = value;
               if (m_enabled)
               {
-                  LibVlcMethods.libvlc_video_set_deinterlace(m_hMediaPlayer, Mode.ToString().ToUtf8());
+                  NativeMethods.libvlc_video_set_deinterlace(m_hMediaPlayer, Mode.ToString().ToUtf8());
               }
               else
               {
-                  LibVlcMethods.libvlc_video_set_deinterlace(m_hMediaPlayer, null);
+                  NativeMethods.libvlc_video_set_deinterlace(m_hMediaPlayer, null);
               }
           }
       }
@@ -63,7 +63,7 @@ namespace Implementation.Filters
           set
           {
               m_mode = value;
-              LibVlcMethods.libvlc_video_set_deinterlace(m_hMediaPlayer, m_mode.ToString().ToUtf8());
+              NativeMethods.libvlc_video_set_deinterlace(m_hMediaPlayer, m_mode.ToString().ToUtf8());
           }
       }
 

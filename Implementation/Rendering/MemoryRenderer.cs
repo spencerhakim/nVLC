@@ -130,12 +130,12 @@ namespace Implementation
         {
             m_format = format;
 
-            LibVlcMethods.libvlc_video_set_format(m_hMediaPlayer, m_format.Chroma.ToUtf8(), m_format.Width, m_format.Height, m_format.Pitch);
+            NativeMethods.libvlc_video_set_format(m_hMediaPlayer, m_format.Chroma.ToUtf8(), m_format.Width, m_format.Height, m_format.Pitch);
             m_pBuffer = MemoryHeap.Alloc(m_format.ImageSize);
 
             m_pixelData = new PixelData(m_format.ImageSize);
             m_pixelDataPtr = GCHandle.Alloc(m_pixelData, GCHandleType.Pinned);
-            LibVlcMethods.libvlc_video_set_callbacks(m_hMediaPlayer, pLockCallback, pUnlockCallback, pDisplayCallback, m_pixelDataPtr.AddrOfPinnedObject());
+            NativeMethods.libvlc_video_set_callbacks(m_hMediaPlayer, pLockCallback, pUnlockCallback, pDisplayCallback, m_pixelDataPtr.AddrOfPinnedObject());
         }
 
         internal void StartTimer()
@@ -172,7 +172,7 @@ namespace Implementation
         protected override void Dispose(bool disposing)
         {
             IntPtr zero = IntPtr.Zero;
-            LibVlcMethods.libvlc_video_set_callbacks(m_hMediaPlayer, zero, zero, zero, zero);
+            NativeMethods.libvlc_video_set_callbacks(m_hMediaPlayer, zero, zero, zero, zero);
 
             m_pixelDataPtr.Free();
             m_pixelData.Dispose();

@@ -36,12 +36,12 @@ namespace Implementation.Players
         public MediaListPlayer(IntPtr hMediaLib, IMediaList mediaList)
         {
             m_mediaList = mediaList;
-            m_hMediaListPlayer = LibVlcMethods.libvlc_media_list_player_new(hMediaLib);
-            LibVlcMethods.libvlc_media_list_player_set_media_list(m_hMediaListPlayer, ((INativePointer)m_mediaList).Pointer);
+            m_hMediaListPlayer = NativeMethods.libvlc_media_list_player_new(hMediaLib);
+            NativeMethods.libvlc_media_list_player_set_media_list(m_hMediaListPlayer, ((INativePointer)m_mediaList).Pointer);
             m_mediaList.Dispose();
 
             m_videoPlayer = new DiskPlayer(hMediaLib);
-            LibVlcMethods.libvlc_media_list_player_set_media_player(m_hMediaListPlayer, ((INativePointer)m_videoPlayer).Pointer);
+            NativeMethods.libvlc_media_list_player_set_media_player(m_hMediaListPlayer, ((INativePointer)m_videoPlayer).Pointer);
             m_videoPlayer.Dispose();
         }
 
@@ -52,19 +52,19 @@ namespace Implementation.Players
                 m_videoPlayer.Dispose();
                 m_videoPlayer = null;
             }
-            LibVlcMethods.libvlc_media_list_player_release(m_hMediaListPlayer);
+            NativeMethods.libvlc_media_list_player_release(m_hMediaListPlayer);
         }
 
         #region IMediaListPlayer Members
 
         public void PlayNext()
         {
-            LibVlcMethods.libvlc_media_list_player_next(m_hMediaListPlayer);
+            NativeMethods.libvlc_media_list_player_next(m_hMediaListPlayer);
         }
 
         public void PlayPrevios()
         {
-            LibVlcMethods.libvlc_media_list_player_previous(m_hMediaListPlayer);
+            NativeMethods.libvlc_media_list_player_previous(m_hMediaListPlayer);
         }
 
         public PlaybackMode PlaybackMode
@@ -75,21 +75,21 @@ namespace Implementation.Players
             }
             set
             {
-                LibVlcMethods.libvlc_media_list_player_set_playback_mode(m_hMediaListPlayer, (libvlc_playback_mode_t)value);
+                NativeMethods.libvlc_media_list_player_set_playback_mode(m_hMediaListPlayer, (libvlc_playback_mode_t)value);
                 m_playbackMode = value;
             }
         }
 
         public void PlayItemAt(int index)
         {
-            LibVlcMethods.libvlc_media_list_player_play_item_at_index(m_hMediaListPlayer, index);
+            NativeMethods.libvlc_media_list_player_play_item_at_index(m_hMediaListPlayer, index);
         }
 
         public MediaState PlayerState
         {
             get
             {
-                return (MediaState)LibVlcMethods.libvlc_media_list_player_get_state(m_hMediaListPlayer);
+                return (MediaState)NativeMethods.libvlc_media_list_player_get_state(m_hMediaListPlayer);
             }
         }
 
@@ -119,17 +119,17 @@ namespace Implementation.Players
 
         public void Play()
         {
-            LibVlcMethods.libvlc_media_list_player_play(m_hMediaListPlayer);
+            NativeMethods.libvlc_media_list_player_play(m_hMediaListPlayer);
         }
 
         public void Pause()
         {
-            LibVlcMethods.libvlc_media_list_player_pause(m_hMediaListPlayer);
+            NativeMethods.libvlc_media_list_player_pause(m_hMediaListPlayer);
         }
 
         public void Stop()
         {
-            LibVlcMethods.libvlc_media_list_player_stop(m_hMediaListPlayer);
+            NativeMethods.libvlc_media_list_player_stop(m_hMediaListPlayer);
         }
 
         public void Open(IMedia media)
@@ -203,7 +203,7 @@ namespace Implementation.Players
             {
                 if (m_hEventManager == IntPtr.Zero)
                 {
-                    m_hEventManager = LibVlcMethods.libvlc_media_list_player_event_manager(m_hMediaListPlayer);
+                    m_hEventManager = NativeMethods.libvlc_media_list_player_event_manager(m_hMediaListPlayer);
                 }
 
                 return m_hEventManager;

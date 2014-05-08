@@ -39,11 +39,11 @@ namespace Implementation.Players
         {
             get
             {
-                return LibVlcMethods.libvlc_audio_get_volume(m_hMediaPlayer);
+                return NativeMethods.libvlc_audio_get_volume(m_hMediaPlayer);
             }
             set
             {
-                LibVlcMethods.libvlc_audio_set_volume(m_hMediaPlayer, value);
+                NativeMethods.libvlc_audio_set_volume(m_hMediaPlayer, value);
             }
         }
 
@@ -51,11 +51,11 @@ namespace Implementation.Players
         {
             get
             {
-                return LibVlcMethods.libvlc_audio_get_mute(m_hMediaPlayer);
+                return NativeMethods.libvlc_audio_get_mute(m_hMediaPlayer);
             }
             set
             {
-                LibVlcMethods.libvlc_audio_set_mute(m_hMediaPlayer, value);
+                NativeMethods.libvlc_audio_set_mute(m_hMediaPlayer, value);
             }
         }
 
@@ -63,11 +63,11 @@ namespace Implementation.Players
         {
             get
             {
-                return LibVlcMethods.libvlc_audio_get_delay(m_hMediaPlayer);
+                return NativeMethods.libvlc_audio_get_delay(m_hMediaPlayer);
             }
             set
             {
-                LibVlcMethods.libvlc_audio_set_delay(m_hMediaPlayer, value);
+                NativeMethods.libvlc_audio_set_delay(m_hMediaPlayer, value);
             }
         }
 
@@ -75,17 +75,17 @@ namespace Implementation.Players
         {
             get
             {
-                return (AudioChannelType)LibVlcMethods.libvlc_audio_get_channel(m_hMediaPlayer);
+                return (AudioChannelType)NativeMethods.libvlc_audio_get_channel(m_hMediaPlayer);
             }
             set
             {
-                LibVlcMethods.libvlc_audio_set_channel(m_hMediaPlayer, (libvlc_audio_output_channel_t)value);
+                NativeMethods.libvlc_audio_set_channel(m_hMediaPlayer, (libvlc_audio_output_channel_t)value);
             }
         }
 
         public void ToggleMute()
         {
-            LibVlcMethods.libvlc_audio_toggle_mute(m_hMediaPlayer);
+            NativeMethods.libvlc_audio_toggle_mute(m_hMediaPlayer);
         }
 
         public IAudioRenderer CustomAudioRenderer
@@ -104,11 +104,11 @@ namespace Implementation.Players
         {
             get
             {
-                return (AudioOutputDeviceType)LibVlcMethods.libvlc_audio_output_get_device_type(m_hMediaPlayer);
+                return (AudioOutputDeviceType)NativeMethods.libvlc_audio_output_get_device_type(m_hMediaPlayer);
             }
             set
             {
-                LibVlcMethods.libvlc_audio_output_set_device_type(m_hMediaPlayer, (libvlc_audio_output_device_types_t)value);
+                NativeMethods.libvlc_audio_output_set_device_type(m_hMediaPlayer, (libvlc_audio_output_device_types_t)value);
             }
         }
 
@@ -121,10 +121,10 @@ namespace Implementation.Players
 
             if (device != null)
             {
-                LibVlcMethods.libvlc_audio_output_device_set(m_hMediaPlayer, module.Name.ToUtf8(), device.Id.ToUtf8());
+                NativeMethods.libvlc_audio_output_device_set(m_hMediaPlayer, module.Name.ToUtf8(), device.Id.ToUtf8());
             }
 
-            int res = LibVlcMethods.libvlc_audio_output_set(m_hMediaPlayer, module.Name.ToUtf8());
+            int res = NativeMethods.libvlc_audio_output_set(m_hMediaPlayer, module.Name.ToUtf8());
             if (res < 0)
             {
                 throw new LibVlcException();
@@ -157,11 +157,11 @@ namespace Implementation.Players
         {
             if (equalizer == null)
             {
-                LibVlcMethods.libvlc_media_player_set_equalizer(m_hMediaPlayer, IntPtr.Zero);
+                NativeMethods.libvlc_media_player_set_equalizer(m_hMediaPlayer, IntPtr.Zero);
                 return;
             }
 
-            LibVlcMethods.libvlc_media_player_set_equalizer(m_hMediaPlayer, equalizer.Handle);
+            NativeMethods.libvlc_media_player_set_equalizer(m_hMediaPlayer, equalizer.Handle);
         }
     }
 }

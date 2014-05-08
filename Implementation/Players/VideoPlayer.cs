@@ -69,28 +69,28 @@ namespace Implementation.Players
         {
             get
             {
-                return LibVlcMethods.libvlc_media_player_get_hwnd(m_hMediaPlayer);
+                return NativeMethods.libvlc_media_player_get_hwnd(m_hMediaPlayer);
             }
             set
             {
-                LibVlcMethods.libvlc_media_player_set_hwnd(m_hMediaPlayer, value);
+                NativeMethods.libvlc_media_player_set_hwnd(m_hMediaPlayer, value);
             }
         }
 
         public void TakeSnapShot(uint stream, string path)
         {
-            LibVlcMethods.libvlc_video_take_snapshot(m_hMediaPlayer, stream, path.ToUtf8(), 0, 0);
+            NativeMethods.libvlc_video_take_snapshot(m_hMediaPlayer, stream, path.ToUtf8(), 0, 0);
         }
 
         public float PlaybackRate
         {
             get
             {
-                return LibVlcMethods.libvlc_media_player_get_rate(m_hMediaPlayer);
+                return NativeMethods.libvlc_media_player_get_rate(m_hMediaPlayer);
             }
             set
             {
-                int res = LibVlcMethods.libvlc_media_player_set_rate(m_hMediaPlayer, value);
+                int res = NativeMethods.libvlc_media_player_set_rate(m_hMediaPlayer, value);
                 if (res == -1)
                 {
                     throw new LibVlcException();
@@ -102,26 +102,26 @@ namespace Implementation.Players
         {
             get
             {
-                return LibVlcMethods.libvlc_media_player_get_fps(m_hMediaPlayer);
+                return NativeMethods.libvlc_media_player_get_fps(m_hMediaPlayer);
             }
         }
 
         public void NextFrame()
         {
-            LibVlcMethods.libvlc_media_player_next_frame(m_hMediaPlayer);
+            NativeMethods.libvlc_media_player_next_frame(m_hMediaPlayer);
         }
 
         public Size GetVideoSize(uint stream)
         {
             uint width = 0, height = 0;
-            LibVlcMethods.libvlc_video_get_size(m_hMediaPlayer, stream, out width, out height);
+            NativeMethods.libvlc_video_get_size(m_hMediaPlayer, stream, out width, out height);
             return new Size((int)width, (int)height);
         }
 
         public Point GetCursorPosition(uint stream)
         {
             int px = 0, py = 0;
-            LibVlcMethods.libvlc_video_get_cursor(m_hMediaPlayer, stream, out px, out py);
+            NativeMethods.libvlc_video_get_cursor(m_hMediaPlayer, stream, out px, out py);
             return new Point(px, py);
         }
 
@@ -133,7 +133,7 @@ namespace Implementation.Players
             }
             set
             {
-                LibVlcMethods.libvlc_video_set_key_input(m_hMediaPlayer, value);
+                NativeMethods.libvlc_video_set_key_input(m_hMediaPlayer, value);
                 m_keyInputEnabled = value;
             }
         }
@@ -146,7 +146,7 @@ namespace Implementation.Players
             }
             set
             {
-                LibVlcMethods.libvlc_video_set_mouse_input(m_hMediaPlayer, value);
+                NativeMethods.libvlc_video_set_mouse_input(m_hMediaPlayer, value);
                 m_mouseInputEnabled = value;
             }
         }
@@ -155,11 +155,11 @@ namespace Implementation.Players
         {
             get
             {
-                return LibVlcMethods.libvlc_video_get_scale(m_hMediaPlayer);
+                return NativeMethods.libvlc_video_get_scale(m_hMediaPlayer);
             }
             set
             {
-                LibVlcMethods.libvlc_video_set_scale(m_hMediaPlayer, value);
+                NativeMethods.libvlc_video_set_scale(m_hMediaPlayer, value);
             }
         }
 
@@ -167,44 +167,44 @@ namespace Implementation.Players
         {
             get
             {
-                IntPtr pData = LibVlcMethods.libvlc_video_get_aspect_ratio(m_hMediaPlayer);
+                IntPtr pData = NativeMethods.libvlc_video_get_aspect_ratio(m_hMediaPlayer);
                 string str = Marshal.PtrToStringAnsi(pData);
                 return (AspectRatioMode)m_aspectMapper[str];
             }
             set
             {
                 string val = EnumUtils.GetEnumDescription(value);
-                LibVlcMethods.libvlc_video_set_aspect_ratio(m_hMediaPlayer, val.ToUtf8());
+                NativeMethods.libvlc_video_set_aspect_ratio(m_hMediaPlayer, val.ToUtf8());
             }
         }
 
         public void SetSubtitleFile(string path)
         {
-            LibVlcMethods.libvlc_video_set_subtitle_file(m_hMediaPlayer, path.ToUtf8());
+            NativeMethods.libvlc_video_set_subtitle_file(m_hMediaPlayer, path.ToUtf8());
         }
 
         public int Teletext
         {
             get
             {
-                return LibVlcMethods.libvlc_video_get_teletext(m_hMediaPlayer);
+                return NativeMethods.libvlc_video_get_teletext(m_hMediaPlayer);
             }
             set
             {
-                LibVlcMethods.libvlc_video_set_teletext(m_hMediaPlayer, value);
+                NativeMethods.libvlc_video_set_teletext(m_hMediaPlayer, value);
             }
         }
 
         public void ToggleTeletext()
         {
-            LibVlcMethods.libvlc_toggle_teletext(m_hMediaPlayer);
+            NativeMethods.libvlc_toggle_teletext(m_hMediaPlayer);
         }
 
         public bool PlayerWillPlay
         {
             get
             {
-                return LibVlcMethods.libvlc_media_player_will_play(m_hMediaPlayer);
+                return NativeMethods.libvlc_media_player_will_play(m_hMediaPlayer);
             }
         }
 
@@ -212,7 +212,7 @@ namespace Implementation.Players
         {
             get
             {
-                return LibVlcMethods.libvlc_media_player_has_vout(m_hMediaPlayer);
+                return NativeMethods.libvlc_media_player_has_vout(m_hMediaPlayer);
             }
         }
 
@@ -220,7 +220,7 @@ namespace Implementation.Players
         {
             get
             {
-                return LibVlcMethods.libvlc_media_player_is_seekable(m_hMediaPlayer);
+                return NativeMethods.libvlc_media_player_is_seekable(m_hMediaPlayer);
             }
         }
 
@@ -228,7 +228,7 @@ namespace Implementation.Players
         {
             get
             {
-                return LibVlcMethods.libvlc_media_player_can_pause(m_hMediaPlayer);
+                return NativeMethods.libvlc_media_player_can_pause(m_hMediaPlayer);
             }
         }
 

@@ -30,7 +30,7 @@ namespace Implementation.Exceptions
         /// Initializes a new instance of the LibVlcException class with the last error that occurred.
         /// </summary>
         public LibVlcException()
-            : base(Marshal.PtrToStringAnsi(LibVlcMethods.libvlc_errmsg()))
+            : base(Marshal.PtrToStringAnsi(NativeMethods.libvlc_errmsg()))
         {
 
         }

@@ -33,19 +33,19 @@ namespace Implementation.Discovery
 
         public MediaDiscoverer(IntPtr hMediaLib, string name)
         {
-            m_hDiscovery = LibVlcMethods.libvlc_media_discoverer_new_from_name(hMediaLib, name.ToUtf8());
+            m_hDiscovery = NativeMethods.libvlc_media_discoverer_new_from_name(hMediaLib, name.ToUtf8());
         }
 
         protected override void Dispose(bool disposing)
         {
-            LibVlcMethods.libvlc_media_discoverer_release(m_hDiscovery);
+            NativeMethods.libvlc_media_discoverer_release(m_hDiscovery);
         }
 
         public bool IsRunning
         {
             get
             {
-                return (LibVlcMethods.libvlc_media_discoverer_is_running(m_hDiscovery) == 1);
+                return (NativeMethods.libvlc_media_discoverer_is_running(m_hDiscovery) == 1);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Implementation.Discovery
         {
             get
             {
-                IntPtr pData = LibVlcMethods.libvlc_media_discoverer_localized_name(m_hDiscovery);
+                IntPtr pData = NativeMethods.libvlc_media_discoverer_localized_name(m_hDiscovery);
                 return Marshal.PtrToStringAnsi(pData);
             }
         }
@@ -62,7 +62,7 @@ namespace Implementation.Discovery
         {
             get
             {
-                return new MediaList(LibVlcMethods.libvlc_media_discoverer_media_list(m_hDiscovery), ReferenceCountAction.None);
+                return new MediaList(NativeMethods.libvlc_media_discoverer_media_list(m_hDiscovery), ReferenceCountAction.None);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Implementation.Discovery
         {
             get 
             {
-                return LibVlcMethods.libvlc_media_discoverer_event_manager(m_hDiscovery);
+                return NativeMethods.libvlc_media_discoverer_event_manager(m_hDiscovery);
             }
         }
 

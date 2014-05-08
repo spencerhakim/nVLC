@@ -62,8 +62,8 @@ namespace Implementation
             m_timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             m_timer.Interval = 1000;
             SAR = AspectRatio.Default;
-            LibVlcMethods.libvlc_video_set_format_callbacks(m_hMediaPlayer, pFormatCallback, IntPtr.Zero);        
-            LibVlcMethods.libvlc_video_set_callbacks(m_hMediaPlayer, pLockCallback, IntPtr.Zero, pDisplayCallback, IntPtr.Zero);
+            NativeMethods.libvlc_video_set_format_callbacks(m_hMediaPlayer, pFormatCallback, IntPtr.Zero);        
+            NativeMethods.libvlc_video_set_callbacks(m_hMediaPlayer, pLockCallback, IntPtr.Zero, pDisplayCallback, IntPtr.Zero);
         }
 
         private unsafe int OnFormatCallback(void** opaque, char* chroma, int* width, int* height, int* pitches, int* lines)
@@ -208,7 +208,7 @@ namespace Implementation
         protected override void Dispose(bool disposing)
         {
             IntPtr zero = IntPtr.Zero;
-            LibVlcMethods.libvlc_video_set_callbacks(m_hMediaPlayer, zero, zero, zero, zero);
+            NativeMethods.libvlc_video_set_callbacks(m_hMediaPlayer, zero, zero, zero, zero);
 
             if (m_pixelData != default(PlanarPixelData))
             {

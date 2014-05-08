@@ -62,12 +62,12 @@ namespace Implementation.Filters
       {
          get
          {
-            IntPtr pData = LibVlcMethods.libvlc_video_get_crop_geometry(m_hMediaPlayer);
+            IntPtr pData = NativeMethods.libvlc_video_get_crop_geometry(m_hMediaPlayer);
             return Marshal.PtrToStringAnsi(pData);
          }
          set
          {
-            LibVlcMethods.libvlc_video_set_crop_geometry(m_hMediaPlayer, value.ToUtf8());
+            NativeMethods.libvlc_video_set_crop_geometry(m_hMediaPlayer, value.ToUtf8());
          }
       }
    }

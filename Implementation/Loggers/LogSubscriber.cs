@@ -35,7 +35,7 @@ namespace Implementation.Loggers
             m_logger = logger;
             m_callback = OnLogCallback;
             IntPtr hCallback = Marshal.GetFunctionPointerForDelegate(m_callback);
-            LibVlcMethods.libvlc_log_set(m_instance, hCallback, IntPtr.Zero);
+            NativeMethods.libvlc_log_set(m_instance, hCallback, IntPtr.Zero);
         }
 
         private void OnLogCallback(void* data, libvlc_log_level level, void* ctx, char* fmt, char* args)
@@ -73,7 +73,7 @@ namespace Implementation.Loggers
         {
             try
             {
-                LibVlcMethods.libvlc_log_unset(m_instance);
+                NativeMethods.libvlc_log_unset(m_instance);
             }
             catch (Exception)
             { }

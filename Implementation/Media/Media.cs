@@ -46,7 +46,7 @@ namespace Implementation.Media
         public BasicMedia(IntPtr hMedia, ReferenceCountAction refCountAction)
         {
             m_hMedia = hMedia;
-            IntPtr pData = LibVlcMethods.libvlc_media_get_mrl(m_hMedia);
+            IntPtr pData = NativeMethods.libvlc_media_get_mrl(m_hMedia);
             m_path = Marshal.PtrToStringAnsi(pData);
             switch (refCountAction)
             {
@@ -76,7 +76,7 @@ namespace Implementation.Media
             set
             {
                 m_path = value;
-                m_hMedia = LibVlcMethods.libvlc_media_new_location(m_hMediaLib, m_path.ToUtf8());
+                m_hMedia = NativeMethods.libvlc_media_new_location(m_hMediaLib, m_path.ToUtf8());
             }
         }
 
@@ -84,7 +84,7 @@ namespace Implementation.Media
         {
             get
             {
-                return (MediaState)LibVlcMethods.libvlc_media_get_state(m_hMedia);
+                return (MediaState)NativeMethods.libvlc_media_get_state(m_hMedia);
             }
         }
 
@@ -94,19 +94,19 @@ namespace Implementation.Media
             {
                 if (!string.IsNullOrEmpty(item))
                 {
-                    LibVlcMethods.libvlc_media_add_option(m_hMedia, item.ToUtf8());
+                    NativeMethods.libvlc_media_add_option(m_hMedia, item.ToUtf8());
                 }
             }
         }
 
         public void AddOptionFlag(string option, int flag)
         {
-            LibVlcMethods.libvlc_media_add_option_flag(m_hMedia, option.ToUtf8(), flag);
+            NativeMethods.libvlc_media_add_option_flag(m_hMedia, option.ToUtf8(), flag);
         }
 
         public IMedia Duplicate()
         {
-            IntPtr clone = LibVlcMethods.libvlc_media_duplicate(m_hMedia);
+            IntPtr clone = NativeMethods.libvlc_media_duplicate(m_hMedia);
             return new BasicMedia(clone, ReferenceCountAction.None);
         }
 
@@ -114,11 +114,11 @@ namespace Implementation.Media
         {
             if (aSync)
             {
-                LibVlcMethods.libvlc_media_parse_async(m_hMedia);
+                NativeMethods.libvlc_media_parse_async(m_hMedia);
             }
             else
             {
-                LibVlcMethods.libvlc_media_parse(m_hMedia);
+                NativeMethods.libvlc_media_parse(m_hMedia);
             }
         }
 
@@ -126,7 +126,7 @@ namespace Implementation.Media
         {
             get
             {
-                return LibVlcMethods.libvlc_media_is_parsed(m_hMedia);
+                return NativeMethods.libvlc_media_is_parsed(m_hMedia);
             }
         }
 
@@ -134,11 +134,11 @@ namespace Implementation.Media
         {
             get
             {
-                return LibVlcMethods.libvlc_media_get_user_data(m_hMedia);
+                return NativeMethods.libvlc_media_get_user_data(m_hMedia);
             }
             set
             {
-                LibVlcMethods.libvlc_media_set_user_data(m_hMedia, value);
+                NativeMethods.libvlc_media_set_user_data(m_hMedia, value);
             }
         }
 
@@ -161,7 +161,7 @@ namespace Implementation.Media
             {
                 libvlc_media_stats_t t;
 
-                int num = LibVlcMethods.libvlc_media_get_stats(m_hMedia, out t);
+                int num = NativeMethods.libvlc_media_get_stats(m_hMedia, out t);
 
                 return t.ToMediaStatistics();
             }
@@ -171,7 +171,7 @@ namespace Implementation.Media
         {
             get
             {
-                IntPtr hMediaList = LibVlcMethods.libvlc_media_subitems(m_hMedia);
+                IntPtr hMediaList = NativeMethods.libvlc_media_subitems(m_hMedia);
                 if (hMediaList == IntPtr.Zero)
                 {
                     return null;
@@ -188,7 +188,7 @@ namespace Implementation.Media
                 unsafe
                 {
                     libvlc_media_track_t** ppTracks;
-                    int num = LibVlcMethods.libvlc_media_tracks_get(m_hMedia, &ppTracks);
+                    int num = NativeMethods.libvlc_media_tracks_get(m_hMedia, &ppTracks);
                     if (num == 0 || ppTracks == null)
                     {
                         throw new LibVlcException();
@@ -243,7 +243,7 @@ namespace Implementation.Media
                         list.Add(track);
                     }
 
-                    LibVlcMethods.libvlc_media_tracks_release(ppTracks, num);
+                    NativeMethods.libvlc_media_tracks_release(ppTracks, num);
                     return list.ToArray();
                 }
             }
@@ -267,14 +267,14 @@ namespace Implementation.Media
 
         public void AddRef()
         {
-            LibVlcMethods.libvlc_media_retain(m_hMedia);
+            NativeMethods.libvlc_media_retain(m_hMedia);
         }
 
         public void Release()
         {
             try
             {
-                LibVlcMethods.libvlc_media_release(m_hMedia);
+                NativeMethods.libvlc_media_release(m_hMedia);
             }
             catch (Exception)
             { }
@@ -290,7 +290,7 @@ namespace Implementation.Media
             {
                 if (m_hEventManager == IntPtr.Zero)
                 {
-                    m_hEventManager = LibVlcMethods.libvlc_media_event_manager(m_hMedia);
+                    m_hEventManager = NativeMethods.libvlc_media_event_manager(m_hMedia);
                 }
 
                 return m_hEventManager;

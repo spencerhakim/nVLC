@@ -85,8 +85,8 @@ namespace Implementation
         {
             m_callbacks.VolumeCallback = volume;
             m_callbacks.SoundCallback = sound;
-            LibVlcMethods.libvlc_audio_set_callbacks(m_hMediaPlayer, m_hSound, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
-            LibVlcMethods.libvlc_audio_set_volume_callback(m_hMediaPlayer, m_hVolume);
+            NativeMethods.libvlc_audio_set_callbacks(m_hMediaPlayer, m_hSound, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+            NativeMethods.libvlc_audio_set_volume_callback(m_hMediaPlayer, m_hVolume);
         }
 
         public void SetCallbacks(AudioCallbacks callbacks)
@@ -97,20 +97,20 @@ namespace Implementation
             }
 
             m_callbacks = callbacks;
-            LibVlcMethods.libvlc_audio_set_callbacks(m_hMediaPlayer, m_hSound, m_hPause, m_hResume, m_hFlush, m_hDrain, IntPtr.Zero);
-            LibVlcMethods.libvlc_audio_set_volume_callback(m_hMediaPlayer, m_hVolume);
+            NativeMethods.libvlc_audio_set_callbacks(m_hMediaPlayer, m_hSound, m_hPause, m_hResume, m_hFlush, m_hDrain, IntPtr.Zero);
+            NativeMethods.libvlc_audio_set_volume_callback(m_hMediaPlayer, m_hVolume);
         }
 
         public void SetFormat(SoundFormat format)
         {
             m_format = format;
-            LibVlcMethods.libvlc_audio_set_format(m_hMediaPlayer, m_format.Format.ToUtf8(), m_format.Rate, m_format.Channels);
+            NativeMethods.libvlc_audio_set_format(m_hMediaPlayer, m_format.Format.ToUtf8(), m_format.Rate, m_format.Channels);
         }
 
         public void SetFormatCallback(Func<SoundFormat, SoundFormat> formatSetup)
         {
             m_formatSetupCB = formatSetup;
-            LibVlcMethods.libvlc_audio_set_format_callbacks(m_hMediaPlayer, m_hSetup, IntPtr.Zero);
+            NativeMethods.libvlc_audio_set_format_callbacks(m_hMediaPlayer, m_hSetup, IntPtr.Zero);
         }
 
         internal void StartTimer()
@@ -206,8 +206,8 @@ namespace Implementation
 
         protected override void Dispose(bool disposing)
         {
-            LibVlcMethods.libvlc_audio_set_format_callbacks(m_hMediaPlayer, IntPtr.Zero, IntPtr.Zero);
-            LibVlcMethods.libvlc_audio_set_callbacks(m_hMediaPlayer, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+            NativeMethods.libvlc_audio_set_format_callbacks(m_hMediaPlayer, IntPtr.Zero, IntPtr.Zero);
+            NativeMethods.libvlc_audio_set_callbacks(m_hMediaPlayer, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
 
             if (disposing)
             {

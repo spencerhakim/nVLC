@@ -21,10 +21,10 @@ namespace Implementation
         {
             get
             {
-                int count = LibVlcMethods.libvlc_audio_equalizer_get_preset_count();
+                int count = NativeMethods.libvlc_audio_equalizer_get_preset_count();
                 for (int i = 0; i < count; i++)
                 {
-                    yield return new Preset(i, Marshal.PtrToStringAnsi(LibVlcMethods.libvlc_audio_equalizer_get_preset_name(i)));
+                    yield return new Preset(i, Marshal.PtrToStringAnsi(NativeMethods.libvlc_audio_equalizer_get_preset_name(i)));
                 }
             }
         }
@@ -34,7 +34,7 @@ namespace Implementation
         /// </summary>
         public Equalizer()
         {
-            _handle = LibVlcMethods.libvlc_audio_equalizer_new();
+            _handle = NativeMethods.libvlc_audio_equalizer_new();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Implementation
         /// <param name="preset"></param>
         public Equalizer(Preset preset)
         {
-            _handle = LibVlcMethods.libvlc_audio_equalizer_new_from_preset(preset.Index);
+            _handle = NativeMethods.libvlc_audio_equalizer_new_from_preset(preset.Index);
         }
 
         /// <summary>
@@ -53,17 +53,17 @@ namespace Implementation
         {
             get 
             {
-                return LibVlcMethods.libvlc_audio_equalizer_get_preamp(_handle); 
+                return NativeMethods.libvlc_audio_equalizer_get_preamp(_handle); 
             }
             set 
             {
-                LibVlcMethods.libvlc_audio_equalizer_set_preamp(_handle, value);
+                NativeMethods.libvlc_audio_equalizer_set_preamp(_handle, value);
             }
         }
 
         protected override void Dispose(bool disposing)
         {
-            LibVlcMethods.libvlc_audio_equalizer_release(_handle);
+            NativeMethods.libvlc_audio_equalizer_release(_handle);
         }
 
         /// <summary>
@@ -75,11 +75,11 @@ namespace Implementation
             {
                 if (_bands == null)
                 {
-                    int count = LibVlcMethods.libvlc_audio_equalizer_get_band_count();
+                    int count = NativeMethods.libvlc_audio_equalizer_get_band_count();
                     List<Band> temp = new List<Band>(count);
                     for (int i = 0; i < count; i++)
                     {
-                        temp.Add(new Band(i, LibVlcMethods.libvlc_audio_equalizer_get_band_frequency(i), _handle));
+                        temp.Add(new Band(i, NativeMethods.libvlc_audio_equalizer_get_band_frequency(i), _handle));
                     }
 
                     _bands = new ReadOnlyCollection<Band>(temp);
@@ -157,11 +157,11 @@ namespace Implementation
         { 
             get
             {
-                return LibVlcMethods.libvlc_audio_equalizer_get_amp_at_index(_handle, Index);
+                return NativeMethods.libvlc_audio_equalizer_get_amp_at_index(_handle, Index);
             }
             set
             {
-                LibVlcMethods.libvlc_audio_equalizer_set_amp_at_index(_handle, value, Index);
+                NativeMethods.libvlc_audio_equalizer_set_amp_at_index(_handle, value, Index);
             }
         }
 

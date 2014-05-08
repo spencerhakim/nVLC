@@ -24,9 +24,13 @@ namespace LibVlcWrapper
     {
         public UInt32 sizeof_msg;
         public Int32 i_severity;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_type;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_name;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_header;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_message;
     }
 
@@ -101,6 +105,7 @@ namespace LibVlcWrapper
     public struct libvlc_event_t
     {
         public libvlc_event_e type;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr p_obj;
         public MediaDescriptorUnion MediaDescriptor;
     }
@@ -179,6 +184,7 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct media_subitem_added
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr new_child;
     }
 
@@ -197,6 +203,7 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct media_freed
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr md;
     }
 
@@ -241,6 +248,7 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct media_list_item_added
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr item;
         public int index;
     }
@@ -248,6 +256,7 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct media_list_will_add_item
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr item;
         public int index;
     }
@@ -255,6 +264,7 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct media_list_item_deleted
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr item;
         public int index;
     }
@@ -262,6 +272,7 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct media_list_will_delete_item
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr item;
         public int index;
     }
@@ -270,6 +281,7 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct media_list_player_next_item_set
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr item;
     }
 
@@ -277,6 +289,7 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct media_player_snapshot_taken
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_filename;
     }
 
@@ -291,7 +304,9 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct vlm_media_event
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_media_name;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_instance_name;
     }
 
@@ -299,24 +314,33 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct media_player_media_changed
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr new_media;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct libvlc_module_description_t
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_name;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_shortname;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_longname;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_help;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr p_next;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct libvlc_audio_output_t
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_name;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_description;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr p_next;
     }
 
@@ -324,7 +348,9 @@ namespace LibVlcWrapper
     public struct libvlc_track_description_t
     {
         public int i_id;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_name;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr p_next;
     }
 
@@ -349,6 +375,7 @@ namespace LibVlcWrapper
     [StructLayout(LayoutKind.Sequential)]
     public struct libvlc_subtitle_track_t
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_encoding;
     }
 
@@ -361,9 +388,12 @@ namespace LibVlcWrapper
         public libvlc_track_type_t i_type;
         public int i_profile;
         public int i_level;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr media;
         public uint i_bitrate;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_language;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         public IntPtr psz_description;
     }
 }

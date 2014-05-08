@@ -34,7 +34,7 @@ namespace Implementation.Media
       public MediaList(IntPtr hMediaLib)
       {
          m_hMediaLib = hMediaLib;
-         m_hMediaList = LibVlcMethods.libvlc_media_list_new(hMediaLib);
+         m_hMediaList = NativeMethods.libvlc_media_list_new(hMediaLib);
       }
 
       public MediaList(IntPtr hMediaList, ReferenceCountAction action)
@@ -59,14 +59,14 @@ namespace Implementation.Media
          public MediaListLock(IntPtr hMediaList)
          {
             m_hMediaList = hMediaList;
-            LibVlcMethods.libvlc_media_list_lock(m_hMediaList);
+            NativeMethods.libvlc_media_list_lock(m_hMediaList);
          }
 
          #region IDisposable Members
 
          public void Dispose()
          {
-            LibVlcMethods.libvlc_media_list_unlock(m_hMediaList);
+            NativeMethods.libvlc_media_list_unlock(m_hMediaList);
          }
 
          #endregion
@@ -78,7 +78,7 @@ namespace Implementation.Media
       {
          using (new MediaListLock(m_hMediaList))
          {
-            return LibVlcMethods.libvlc_media_list_index_of_item(m_hMediaList, ((INativePointer)item).Pointer);
+            return NativeMethods.libvlc_media_list_index_of_item(m_hMediaList, ((INativePointer)item).Pointer);
          }
       }
 
@@ -86,7 +86,7 @@ namespace Implementation.Media
       {
          using (new MediaListLock(m_hMediaList))
          {
-            LibVlcMethods.libvlc_media_list_insert_media(m_hMediaList, ((INativePointer)item).Pointer, index);
+            NativeMethods.libvlc_media_list_insert_media(m_hMediaList, ((INativePointer)item).Pointer, index);
          }
       }
 
@@ -94,7 +94,7 @@ namespace Implementation.Media
       {
          using (new MediaListLock(m_hMediaList))
          {
-            LibVlcMethods.libvlc_media_list_remove_index(m_hMediaList, index);
+            NativeMethods.libvlc_media_list_remove_index(m_hMediaList, index);
          }
       }
 
@@ -104,7 +104,7 @@ namespace Implementation.Media
          {
             using (new MediaListLock(m_hMediaList))
             {
-               IntPtr hMedia = LibVlcMethods.libvlc_media_list_item_at_index(m_hMediaList, index);
+               IntPtr hMedia = NativeMethods.libvlc_media_list_item_at_index(m_hMediaList, index);
                if (hMedia == IntPtr.Zero)
                {
                   throw new Exception(string.Format("Media at index {0} not found", index));
@@ -127,7 +127,7 @@ namespace Implementation.Media
       {
          using (new MediaListLock(m_hMediaList))
          {
-            LibVlcMethods.libvlc_media_list_add_media(m_hMediaList, ((INativePointer)item).Pointer);
+            NativeMethods.libvlc_media_list_add_media(m_hMediaList, ((INativePointer)item).Pointer);
          }
       }
 
@@ -135,11 +135,11 @@ namespace Implementation.Media
       {
          using (new MediaListLock(m_hMediaList))
          {
-            int count = LibVlcMethods.libvlc_media_list_count(m_hMediaList);
+            int count = NativeMethods.libvlc_media_list_count(m_hMediaList);
 
             for (int i = 0; i < count; i++)
             {
-               LibVlcMethods.libvlc_media_list_remove_index(m_hMediaList, 0);
+               NativeMethods.libvlc_media_list_remove_index(m_hMediaList, 0);
             }
          }
       }
@@ -160,7 +160,7 @@ namespace Implementation.Media
          {
             using (new MediaListLock(m_hMediaList))
             {
-               return LibVlcMethods.libvlc_media_list_count(m_hMediaList);
+               return NativeMethods.libvlc_media_list_count(m_hMediaList);
             }
          }
       }
@@ -169,7 +169,7 @@ namespace Implementation.Media
       {
          get 
          { 
-            return LibVlcMethods.libvlc_media_list_is_readonly(m_hMediaList) == 0; 
+            return NativeMethods.libvlc_media_list_is_readonly(m_hMediaList) == 0; 
          }
       }
 
@@ -230,7 +230,7 @@ namespace Implementation.Media
          {
             if (m_hEventManager == IntPtr.Zero)
             {
-               m_hEventManager = LibVlcMethods.libvlc_media_list_event_manager(m_hMediaList);
+               m_hEventManager = NativeMethods.libvlc_media_list_event_manager(m_hMediaList);
             }
 
             return m_hEventManager;
@@ -259,14 +259,14 @@ namespace Implementation.Media
 
       public void AddRef()
       {
-         LibVlcMethods.libvlc_media_list_retain(m_hMediaList);
+         NativeMethods.libvlc_media_list_retain(m_hMediaList);
       }
 
       public void Release()
       {
          try
          {
-            LibVlcMethods.libvlc_media_list_release(m_hMediaList);
+            NativeMethods.libvlc_media_list_release(m_hMediaList);
          }
          catch (AccessViolationException)
          { }

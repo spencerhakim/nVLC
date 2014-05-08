@@ -36,7 +36,7 @@ namespace Implementation.VLM
         {
             get
             {
-                return LibVlcMethods.libvlc_vlm_get_event_manager(m_hMediaLib);
+                return NativeMethods.libvlc_vlm_get_event_manager(m_hMediaLib);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Implementation.VLM
         {
             try
             {
-                LibVlcMethods.libvlc_vlm_release(m_hMediaLib);
+                NativeMethods.libvlc_vlm_release(m_hMediaLib);
             }
             catch (Exception)
             { }
@@ -61,7 +61,7 @@ namespace Implementation.VLM
                 optionsArray = options.ToArray();
             }
 
-            if (LibVlcMethods.libvlc_vlm_add_broadcast(m_hMediaLib, name.ToUtf8(), input.ToUtf8(), output.ToUtf8(), optionsNumber, optionsArray, bEnabled == true ? 1 : 0, bLoop == true ? 1 : 0) != 0)
+            if (NativeMethods.libvlc_vlm_add_broadcast(m_hMediaLib, name.ToUtf8(), input.ToUtf8(), output.ToUtf8(), optionsNumber, optionsArray, bEnabled == true ? 1 : 0, bLoop == true ? 1 : 0) != 0)
             {
                 throw new LibVlcException();
             }
@@ -78,7 +78,7 @@ namespace Implementation.VLM
                 optionsArray = options.ToArray();
             }
 
-            if (LibVlcMethods.libvlc_vlm_add_vod(m_hMediaLib, name.ToUtf8(), input.ToUtf8(), optionsNumber, optionsArray, bEnabled == true ? 1 : 0, mux.ToUtf8()) != 0)
+            if (NativeMethods.libvlc_vlm_add_vod(m_hMediaLib, name.ToUtf8(), input.ToUtf8(), optionsNumber, optionsArray, bEnabled == true ? 1 : 0, mux.ToUtf8()) != 0)
             {
                 throw new LibVlcException();
             }
@@ -86,7 +86,7 @@ namespace Implementation.VLM
 
         public void DeleteMedia(string name)
         {
-            if (LibVlcMethods.libvlc_vlm_del_media(m_hMediaLib, name.ToUtf8()) != 0)
+            if (NativeMethods.libvlc_vlm_del_media(m_hMediaLib, name.ToUtf8()) != 0)
             {
                 throw new LibVlcException();
             }
@@ -94,7 +94,7 @@ namespace Implementation.VLM
 
         public void SetEnabled(string name, bool bEnabled)
         {
-            if (LibVlcMethods.libvlc_vlm_set_enabled(m_hMediaLib, name.ToUtf8(), bEnabled == true ? 1 : 0) != 0)
+            if (NativeMethods.libvlc_vlm_set_enabled(m_hMediaLib, name.ToUtf8(), bEnabled == true ? 1 : 0) != 0)
             {
                 throw new LibVlcException();
             }
@@ -102,7 +102,7 @@ namespace Implementation.VLM
 
         public void SetInput(string name, string input)
         {
-            if (LibVlcMethods.libvlc_vlm_set_input(m_hMediaLib, name.ToUtf8(), input.ToUtf8()) != 0)
+            if (NativeMethods.libvlc_vlm_set_input(m_hMediaLib, name.ToUtf8(), input.ToUtf8()) != 0)
             {
                 throw new LibVlcException();
             }
@@ -110,7 +110,7 @@ namespace Implementation.VLM
 
         public void SetOutput(string name, string output)
         {
-            if (LibVlcMethods.libvlc_vlm_set_output(m_hMediaLib, name.ToUtf8(), output.ToUtf8()) != 0)
+            if (NativeMethods.libvlc_vlm_set_output(m_hMediaLib, name.ToUtf8(), output.ToUtf8()) != 0)
             {
                 throw new LibVlcException();
             }
@@ -118,7 +118,7 @@ namespace Implementation.VLM
 
         public void AddInput(string name, string input)
         {
-            if (LibVlcMethods.libvlc_vlm_add_input(m_hMediaLib, name.ToUtf8(), input.ToUtf8()) != 0)
+            if (NativeMethods.libvlc_vlm_add_input(m_hMediaLib, name.ToUtf8(), input.ToUtf8()) != 0)
             {
                 throw new LibVlcException();
             }
@@ -126,7 +126,7 @@ namespace Implementation.VLM
 
         public void SetLoop(string name, bool bLoop)
         {
-            if (LibVlcMethods.libvlc_vlm_set_loop(m_hMediaLib, name.ToUtf8(), bLoop == true ? 1 : 0) != 0)
+            if (NativeMethods.libvlc_vlm_set_loop(m_hMediaLib, name.ToUtf8(), bLoop == true ? 1 : 0) != 0)
             {
                 throw new LibVlcException();
             }
@@ -134,7 +134,7 @@ namespace Implementation.VLM
 
         public void SetMux(string name, string mux)
         {
-            if (LibVlcMethods.libvlc_vlm_set_mux(m_hMediaLib, name.ToUtf8(), mux.ToUtf8()) != 0)
+            if (NativeMethods.libvlc_vlm_set_mux(m_hMediaLib, name.ToUtf8(), mux.ToUtf8()) != 0)
             {
                 throw new LibVlcException();
             }
@@ -151,7 +151,7 @@ namespace Implementation.VLM
                 optionsArray = options.ToArray();
             }
 
-            if (LibVlcMethods.libvlc_vlm_change_media(m_hMediaLib, name.ToUtf8(), input.ToUtf8(), output.ToUtf8(), optionsNumber, optionsArray, bEnabled == true ? 1 : 0, bLoop == true ? 1 : 0) != 0)
+            if (NativeMethods.libvlc_vlm_change_media(m_hMediaLib, name.ToUtf8(), input.ToUtf8(), output.ToUtf8(), optionsNumber, optionsArray, bEnabled == true ? 1 : 0, bLoop == true ? 1 : 0) != 0)
             {
                 throw new LibVlcException();
             }
@@ -159,57 +159,57 @@ namespace Implementation.VLM
 
         public void Play(string name)
         {
-            LibVlcMethods.libvlc_vlm_play_media(m_hMediaLib, name.ToUtf8());
+            NativeMethods.libvlc_vlm_play_media(m_hMediaLib, name.ToUtf8());
         }
 
         public void Stop(string name)
         {
-            LibVlcMethods.libvlc_vlm_stop_media(m_hMediaLib, name.ToUtf8());
+            NativeMethods.libvlc_vlm_stop_media(m_hMediaLib, name.ToUtf8());
         }
 
         public void Pause(string name)
         {
-            LibVlcMethods.libvlc_vlm_pause_media(m_hMediaLib, name.ToUtf8());
+            NativeMethods.libvlc_vlm_pause_media(m_hMediaLib, name.ToUtf8());
         }
 
         public void Seek(string name, float percentage)
         {
-            LibVlcMethods.libvlc_vlm_seek_media(m_hMediaLib, name.ToUtf8(), percentage);
+            NativeMethods.libvlc_vlm_seek_media(m_hMediaLib, name.ToUtf8(), percentage);
         }
 
         public float GetMediaPosition(string name)
         {
-            return LibVlcMethods.libvlc_vlm_get_media_instance_position(m_hMediaLib, name.ToUtf8(), 0);
+            return NativeMethods.libvlc_vlm_get_media_instance_position(m_hMediaLib, name.ToUtf8(), 0);
         }
 
         public int GetMediaTime(string name)
         {
-            return LibVlcMethods.libvlc_vlm_get_media_instance_time(m_hMediaLib, name.ToUtf8(), 0);
+            return NativeMethods.libvlc_vlm_get_media_instance_time(m_hMediaLib, name.ToUtf8(), 0);
         }
 
         public int GetMediaLength(string name)
         {
-            return LibVlcMethods.libvlc_vlm_get_media_instance_length(m_hMediaLib, name.ToUtf8(), 0);
+            return NativeMethods.libvlc_vlm_get_media_instance_length(m_hMediaLib, name.ToUtf8(), 0);
         }
 
         public int GetMediaRate(string name)
         {
-            return LibVlcMethods.libvlc_vlm_get_media_instance_rate(m_hMediaLib, name.ToUtf8(), 0);
+            return NativeMethods.libvlc_vlm_get_media_instance_rate(m_hMediaLib, name.ToUtf8(), 0);
         }
 
         public int GetMediaTitle(string name)
         {
-            return LibVlcMethods.libvlc_vlm_get_media_instance_title(m_hMediaLib, name.ToUtf8(), 0);
+            return NativeMethods.libvlc_vlm_get_media_instance_title(m_hMediaLib, name.ToUtf8(), 0);
         }
 
         public int GetMediaChapter(string name)
         {
-            return LibVlcMethods.libvlc_vlm_get_media_instance_chapter(m_hMediaLib, name.ToUtf8(), 0);
+            return NativeMethods.libvlc_vlm_get_media_instance_chapter(m_hMediaLib, name.ToUtf8(), 0);
         }
 
         public bool IsMediaSeekable(string name)
         {
-            return LibVlcMethods.libvlc_vlm_get_media_instance_seekable(m_hMediaLib, name.ToUtf8(), 0) == 1;
+            return NativeMethods.libvlc_vlm_get_media_instance_seekable(m_hMediaLib, name.ToUtf8(), 0) == 1;
         }
     }
 }

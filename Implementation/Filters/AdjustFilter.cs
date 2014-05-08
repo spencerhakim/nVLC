@@ -109,11 +109,11 @@ namespace Implementation.Filters
       {
          if (typeof(int) == typeof(T))
          {
-            LibVlcMethods.libvlc_video_set_adjust_int(m_hMediaPlayer, adjustType, (int)(object)value);
+            NativeMethods.libvlc_video_set_adjust_int(m_hMediaPlayer, adjustType, (int)(object)value);
          }
          else
          {
-            LibVlcMethods.libvlc_video_set_adjust_float(m_hMediaPlayer, adjustType, (float)(object)value);
+            NativeMethods.libvlc_video_set_adjust_float(m_hMediaPlayer, adjustType, (float)(object)value);
          }
       }
 
@@ -121,11 +121,11 @@ namespace Implementation.Filters
       {
          if (typeof(int) == typeof(T))
          {
-            return (T)(object)LibVlcMethods.libvlc_video_get_adjust_int(m_hMediaPlayer, adjustType);
+            return (T)(object)NativeMethods.libvlc_video_get_adjust_int(m_hMediaPlayer, adjustType);
          }
          else
          {
-            return (T)(object)LibVlcMethods.libvlc_video_get_adjust_float(m_hMediaPlayer, adjustType);
+            return (T)(object)NativeMethods.libvlc_video_get_adjust_float(m_hMediaPlayer, adjustType);
          }
       }
    }

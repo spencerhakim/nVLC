@@ -99,9 +99,9 @@ namespace Implementation
             try
             {
                 if (useCustomStringMarshaller)
-                    m_hMediaLib = LibVlcMethods.libvlc_new_custom_marshaller(args.Length, args);
+                    m_hMediaLib = NativeMethods.libvlc_new_custom_marshaller(args.Length, args);
                 else
-                    m_hMediaLib = LibVlcMethods.libvlc_new(args.Length, args);
+                    m_hMediaLib = NativeMethods.libvlc_new(args.Length, args);
             }
             catch (DllNotFoundException ex)
             {
@@ -277,7 +277,7 @@ namespace Implementation
         {
             get
             {
-                IntPtr pStr = LibVlcMethods.libvlc_get_version();
+                IntPtr pStr = NativeMethods.libvlc_get_version();
                 return Marshal.PtrToStringAnsi(pStr);
             }               
         }
@@ -353,14 +353,14 @@ namespace Implementation
 
         public void AddRef()
         {
-            LibVlcMethods.libvlc_retain(m_hMediaLib);
+            NativeMethods.libvlc_retain(m_hMediaLib);
         }
 
         public void Release()
         {
             try
             {
-                LibVlcMethods.libvlc_release(m_hMediaLib);
+                NativeMethods.libvlc_release(m_hMediaLib);
             }
             catch (AccessViolationException)
             { }
@@ -387,7 +387,7 @@ namespace Implementation
         {
             get
             {
-                return LibVlcMethods.libvlc_clock();
+                return NativeMethods.libvlc_clock();
             }
         }
 
@@ -398,7 +398,7 @@ namespace Implementation
         /// <returns></returns>
         public long Delay(long pts)
         {
-            return LibVlcMethods.libvlc_delay(pts);
+            return NativeMethods.libvlc_delay(pts);
         }
 
         /// <summary>
@@ -408,7 +408,7 @@ namespace Implementation
         {
             get
             {
-                IntPtr pList = LibVlcMethods.libvlc_audio_filter_list_get(m_hMediaLib);
+                IntPtr pList = NativeMethods.libvlc_audio_filter_list_get(m_hMediaLib);
                 libvlc_module_description_t item = (libvlc_module_description_t)Marshal.PtrToStructure(pList, typeof(libvlc_module_description_t));
 
                 do
@@ -426,7 +426,7 @@ namespace Implementation
                 }
                 while (true);
 
-                LibVlcMethods.libvlc_module_description_list_release(pList);
+                NativeMethods.libvlc_module_description_list_release(pList);
             }
         }
 
@@ -437,7 +437,7 @@ namespace Implementation
         {
             get
             {
-                IntPtr pList = LibVlcMethods.libvlc_video_filter_list_get(m_hMediaLib);
+                IntPtr pList = NativeMethods.libvlc_video_filter_list_get(m_hMediaLib);
                 if (pList == IntPtr.Zero)
                 {
                     yield break;
@@ -459,7 +459,7 @@ namespace Implementation
                 }
                 while (true);
 
-                LibVlcMethods.libvlc_module_description_list_release(pList);
+                NativeMethods.libvlc_module_description_list_release(pList);
             }
         }
 
@@ -497,7 +497,7 @@ namespace Implementation
         {
             get
             {
-                IntPtr pList = LibVlcMethods.libvlc_audio_output_list_get(m_hMediaLib);
+                IntPtr pList = NativeMethods.libvlc_audio_output_list_get(m_hMediaLib);
                 libvlc_audio_output_t pDevice = (libvlc_audio_output_t)Marshal.PtrToStructure(pList, typeof(libvlc_audio_output_t));
 
                 do
@@ -516,7 +516,7 @@ namespace Implementation
                 }
                 while (true);
 
-                LibVlcMethods.libvlc_audio_output_list_release(pList);
+                NativeMethods.libvlc_audio_output_list_release(pList);
             }
         }
 
@@ -525,13 +525,13 @@ namespace Implementation
         /// </summary>
         public IEnumerable<AudioOutputDeviceInfo> GetAudioOutputDevices(AudioOutputModuleInfo audioOutputModule)
         {
-            int i = LibVlcMethods.libvlc_audio_output_device_count(m_hMediaLib, audioOutputModule.Name.ToUtf8());
+            int i = NativeMethods.libvlc_audio_output_device_count(m_hMediaLib, audioOutputModule.Name.ToUtf8());
             for (int j = 0; j < i; j++)
             {
                 AudioOutputDeviceInfo d = new AudioOutputDeviceInfo();
-                IntPtr pName = LibVlcMethods.libvlc_audio_output_device_longname(m_hMediaLib, audioOutputModule.Name.ToUtf8(), j);
+                IntPtr pName = NativeMethods.libvlc_audio_output_device_longname(m_hMediaLib, audioOutputModule.Name.ToUtf8(), j);
                 d.Longname = Marshal.PtrToStringAnsi(pName);
-                IntPtr pId = LibVlcMethods.libvlc_audio_output_device_id(m_hMediaLib, audioOutputModule.Name.ToUtf8(), j);
+                IntPtr pId = NativeMethods.libvlc_audio_output_device_id(m_hMediaLib, audioOutputModule.Name.ToUtf8(), j);
                 d.Id = Marshal.PtrToStringAnsi(pId);
 
                 yield return d;
@@ -613,7 +613,7 @@ namespace Implementation
         {
             get 
             {
-                IntPtr pError = LibVlcMethods.libvlc_errmsg();
+                IntPtr pError = NativeMethods.libvlc_errmsg();
                 return Marshal.PtrToStringAnsi(pError);
             }
         }
