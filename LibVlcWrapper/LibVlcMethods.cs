@@ -65,6 +65,9 @@ namespace LibVlcWrapper
         public static extern IntPtr libvlc_get_changeset();
 
         [DllImport("libvlc", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr libvlc_free(IntPtr ptr);
+
+        [DllImport("libvlc", CallingConvention = CallingConvention.Cdecl)]
         public static extern int libvlc_event_attach(IntPtr p_event_manager, libvlc_event_e i_event_type, IntPtr f_callback, IntPtr user_data);
 
         [DllImport("libvlc", CallingConvention = CallingConvention.Cdecl)]
