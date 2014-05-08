@@ -57,7 +57,7 @@ namespace Implementation
         /// <remarks>Default arguments:
         /// "-I",
         /// "dumy",  
-		/// "--ignore-config", 
+        /// "--ignore-config", 
         /// "--no-osd",
         /// "--disable-screensaver",
         /// "--plugin-path=./plugins"
@@ -68,10 +68,10 @@ namespace Implementation
             {
                 "-I", 
                 "dumy",  
-		        "--ignore-config", 
+                "--ignore-config", 
                 "--no-osd",
                 "--disable-screensaver",
-		        "--plugin-path=./plugins" 
+                "--plugin-path=./plugins" 
             };
 
             Initialize(args, findLibvlc, useCustomStringMarshaller);
@@ -288,6 +288,11 @@ namespace Implementation
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
+            if( disposing )
+            {
+                m_log.Dispose();
+            }
+
             Release();
         }
 

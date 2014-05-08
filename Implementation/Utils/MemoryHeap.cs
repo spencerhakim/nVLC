@@ -15,6 +15,7 @@
 // ========================================================================
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -23,7 +24,7 @@ namespace Implementation.Utils
     [SuppressUnmanagedCodeSecurity]
     internal unsafe class MemoryHeap
     {
-        static int ph = GetProcessHeap();
+        static IntPtr ph = GetProcessHeap();
 
         private MemoryHeap() { }
 
@@ -35,7 +36,7 @@ namespace Implementation.Utils
         /// <returns></returns>
         public static void* Alloc(int size)
         {
-            void* result = HeapAlloc(ph, HEAP_ZERO_MEMORY, size);
+            void* result = HeapAlloc(ph, HEAP_ZERO_MEMORY, new IntPtr(size));
             if (result == null)
             {
                 throw new OutOfMemoryException();
@@ -66,7 +67,7 @@ namespace Implementation.Utils
         /// <returns></returns>
         public static void* ReAlloc(void* block, int size)
         {
-            void* result = HeapReAlloc(ph, HEAP_ZERO_MEMORY, block, size);
+            void* result = HeapReAlloc(ph, HEAP_ZERO_MEMORY, block, new IntPtr(size));
             if (result == null)
             {
                 throw new OutOfMemoryException();
@@ -82,7 +83,7 @@ namespace Implementation.Utils
         /// <returns></returns>
         public static int SizeOf(void* block)
         {
-            int result = HeapSize(ph, 0, block);
+            int result = HeapSize(ph, 0, block).ToInt32();
             if (result == -1)
             {
                 throw new InvalidOperationException();
@@ -91,26 +92,37 @@ namespace Implementation.Utils
             return result;
         }
 
+        public static void CopyMemory(void* dest, void* src, int size)
+        {
+            CopyMemory(dest, src, new IntPtr(size));
+        }
+
         // Heap API flags
         const int HEAP_ZERO_MEMORY = 0x00000008;
 
         // Heap API functions
+        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         [DllImport("kernel32")]
-        static extern int GetProcessHeap();
+        static extern IntPtr GetProcessHeap();
 
+        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         [DllImport("kernel32")]
-        static extern void* HeapAlloc(int hHeap, int flags, int size);
+        static extern void* HeapAlloc(IntPtr hHeap, uint flags, IntPtr size);
 
+        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         [DllImport("kernel32")]
-        static extern bool HeapFree(int hHeap, int flags, void* block);
+        static extern bool HeapFree(IntPtr hHeap, uint flags, void* block);
 
+        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         [DllImport("kernel32")]
-        static extern void* HeapReAlloc(int hHeap, int flags, void* block, int size);
+        static extern void* HeapReAlloc(IntPtr hHeap, uint flags, void* block, IntPtr size);
 
+        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         [DllImport("kernel32")]
-        static extern int HeapSize(int hHeap, int flags, void* block);
+        static extern IntPtr HeapSize(IntPtr hHeap, uint flags, void* block);
 
+        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         [DllImport("Kernel32.dll", EntryPoint = "RtlMoveMemory", SetLastError = true)]
-        public static unsafe extern void CopyMemory(void* dest, void* src, int size);
+        static extern void CopyMemory(void* dest, void* src, IntPtr size);
     }
 }

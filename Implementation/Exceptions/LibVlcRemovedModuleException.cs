@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Security.Permissions;
+using System.Runtime.Serialization;
 
 namespace Implementation.Exceptions
 {
     /// <summary>
     /// Represents error that occured due to removal of libVLC module
     /// </summary>
+    [Serializable]
     public class LibVlcRemovedModuleException : Exception
     {
         /// <summary>
@@ -21,6 +21,15 @@ namespace Implementation.Exceptions
             LibVlcModuleName = libVlcModuleName;
             LastWorkingVersion = lastWorkingVersion;
             this.nVlcModuleName = nVlcModuleName;
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        protected LibVlcRemovedModuleException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            LibVlcModuleName = info.GetString("LibVlcModuleName");
+            LastWorkingVersion = info.GetString("LastWorkingVersion");
+            nVlcModuleName = info.GetString("nVlcModuleName");
         }
 
         /// <summary>
@@ -47,6 +56,21 @@ namespace Implementation.Exceptions
             {
                 return string.Format("{0} module based on {1} supported up to libVLC version {2}", nVlcModuleName, LibVlcModuleName, LastWorkingVersion);
             }
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            if (info == null)
+            {
+                throw new ArgumentNullException("info");
+            }
+
+            info.AddValue("LibVlcModuleName", LibVlcModuleName);
+            info.AddValue("LastWorkingVersion", LastWorkingVersion);
+            info.AddValue("nVlcModuleName", nVlcModuleName);
+
+            base.GetObjectData(info, context);
         }
     }
 }

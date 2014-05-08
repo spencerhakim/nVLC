@@ -128,7 +128,7 @@ namespace Implementation.Media
             return clone;
         }
 
-        private class StreamData
+        private class StreamData : DisposableBase
         {
             public BlockingCollection<FrameData> Queue;
             public StreamInfo StreamInfo;
@@ -137,6 +137,14 @@ namespace Implementation.Media
             {
                 StreamInfo = streamInfo;
                 Queue = new BlockingCollection<FrameData>(maxQueueSize);
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                if( disposing )
+                {
+                    Queue.Dispose();
+                }
             }
         }
 

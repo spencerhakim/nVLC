@@ -86,6 +86,7 @@ namespace Implementation.Loggers
 
         [DllImport("msvcrt", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         [SuppressUnmanagedCodeSecurity]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         private static extern int vsprintf(char* str, char* format, char* arg);
     }
 }

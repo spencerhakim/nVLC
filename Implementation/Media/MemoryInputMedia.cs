@@ -14,11 +14,6 @@
 //     
 // ========================================================================
 
-using Declarations;
-using Declarations.Media;
-using Implementation.Media;
-using Implementation.Utils;
-using LibVlcWrapper;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -26,6 +21,10 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Declarations;
+using Declarations.Media;
+using Implementation.Media;
+using Implementation.Utils;
 
 namespace Implementation
 {
@@ -250,7 +249,7 @@ namespace Implementation
                         MemoryHeap.Free(item.Data.ToPointer());
                     }
                 }
-                m_queue = null;
+                m_queue.Dispose();
             }
         }
 

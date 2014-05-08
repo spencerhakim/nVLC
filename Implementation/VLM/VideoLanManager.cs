@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using LibVlcWrapper;
-using Implementation.Exceptions;
-using Implementation.Events;
 using Declarations.Events;
-using System.Runtime.InteropServices;
 using Declarations.VLM;
+using Implementation.Exceptions;
+using LibVlcWrapper;
 
 namespace Implementation.VLM
 {
@@ -42,6 +39,11 @@ namespace Implementation.VLM
 
         protected override void Dispose(bool disposing)
         {
+            if( disposing )
+            {
+                m_Eventbroker.Dispose();
+            }
+
             try
             {
                 NativeMethods.libvlc_vlm_release(m_hMediaLib);

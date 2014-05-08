@@ -123,6 +123,11 @@ namespace Implementation.Players
 
         protected override void Dispose(bool disposing)
         {
+            if( disposing )
+            {
+                m_events.Dispose();
+            }
+
             Release();
         }
 

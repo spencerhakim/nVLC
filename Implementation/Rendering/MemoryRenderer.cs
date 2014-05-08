@@ -108,7 +108,7 @@ namespace Implementation
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
