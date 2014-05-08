@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nVLC_Demo_WPF_D3DImage", "n
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nVLC_Demo_MemoryInputOutput", "nVLC_Demo_MemoryInputOutput\nVLC_Demo_MemoryInputOutput.csproj", "{51371420-37D6-48A0-870F-8FB9985A2DD2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{7F1B1E67-F129-42D4-A6C9-A8606D760D34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,5 +162,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{51371420-37D6-48A0-870F-8FB9985A2DD2} = {7F1B1E67-F129-42D4-A6C9-A8606D760D34}
+		{F17ABED8-3DCD-48AF-8DA4-AE665BDFC9A8} = {7F1B1E67-F129-42D4-A6C9-A8606D760D34}
+		{8E31BADE-4306-41E9-A669-5DAAB98482D2} = {7F1B1E67-F129-42D4-A6C9-A8606D760D34}
+		{FE0A2000-BED5-49FD-B0A5-246F28E86FFB} = {7F1B1E67-F129-42D4-A6C9-A8606D760D34}
 	EndGlobalSection
 EndGlobal
